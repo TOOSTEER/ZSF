@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Квест — Регистрация</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+    <div class="stage-wrapper">
+        <div class="stage auth-page">
+
+            <div class="abs auth-logo" aria-label="Логотип квеста"></div>
+
+            <!-- Переключатель Регистрация / Вход (Вход — только для водящих) -->
+            <div class="abs" style="top: 616px; left: 237px; width: 965px; text-align: center;">
+                <a href="#" class="js-form-mode" data-mode="register" style="margin-right: 24px; text-decoration: underline;">Регистрация</a>
+                <a href="#" class="js-form-mode" data-mode="login" style="text-decoration: underline; opacity: 0.6;">Вход (водящий)</a>
+            </div>
+
+            <!-- ФОРМА РЕГИСТРАЦИИ -->
+            <form id="register-form" class="abs auth-form">
+
+                <div class="abs auth-tabs" style="position: static;">
+                    <button type="button" class="auth-tab js-role-tab active" data-role="member">Участник</button>
+                    <button type="button" class="auth-tab js-role-tab" data-role="host">Водящий</button>
+                </div>
+
+                <input class="auth-field" style="position: static;" type="text" name="first_name" placeholder="Имя" required />
+                <input class="auth-field" style="position: static;" type="text" name="last_name" placeholder="Фамилия" required />
+                <input class="auth-field" style="position: static;" type="text" name="group_name" placeholder="Группа" required />
+
+                <div id="field-password" class="visually-hidden">
+                    <input class="auth-field" style="position: static;" type="password" name="password" placeholder="Пароль водящего" />
+                </div>
+            </form>
+
+            <button form="register-form" type="submit" class="abs auth-submit">Зарегистрироваться</button>
+
+            <!-- ФОРМА ВХОДА (водящий) -->
+            <form id="login-form" class="abs auth-form visually-hidden">
+                <input class="auth-field" style="position: static;" type="text" name="login" placeholder="Логин" required />
+                <input class="auth-field" style="position: static;" type="password" name="password" placeholder="Пароль" required />
+                <button type="submit" class="btn btn-primary" style="position: static; width: 965px; height: 113px; border-radius: 30px;">Войти</button>
+            </form>
+
+            <p id="auth-error" class="abs error-text visually-hidden" style="top: 1960px; left: 237px; width: 965px;"></p>
+        </div>
+    </div>
+
+    <!-- Модалка после успешной регистрации участника -->
+    <div id="success-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <h2>Добро пожаловать!</h2>
+            <p>Ваш логин: <strong id="modal-login"></strong></p>
+            <p>Ваша команда: <strong id="modal-team"></strong>
+                <span id="modal-team-color" class="auth-modal-team-color"></span>
+            </p>
+            <button id="modal-continue" class="btn-primary" style="width: 100%; height: 48px; border-radius: 24px; margin-top: 16px;">Продолжить</button>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

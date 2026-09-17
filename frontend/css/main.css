@@ -1,0 +1,112 @@
+/* main.css — главная страница (main.html) */
+
+.main-page {
+    min-height: 2300px;
+    background-color: #14142b;
+    background-image: url('/images/backgrounds/main-bg.jpg'); /* TODO: положить реальный фон */
+    background-size: cover;
+    background-position: top center;
+}
+
+.main-header {
+    top: 132px;
+    left: 92px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.main-team-name {
+    font-family: var(--font-pixel);
+    font-size: 32px;
+}
+
+.main-team-color-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.main-team-color-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.progress-track {
+    top: 454px;
+    left: 98px;
+    width: 1243px;
+    height: 88px;
+    border-radius: 44px;
+    background-color: rgba(255, 255, 255, 0.12);
+    background-image: url('/images/progress/progress-empty.png'); /* TODO: положить пустую шкалу */
+    background-size: cover;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%; /* выставляется в JS: min(progress, 100)% */
+    background-color: var(--color-accent);
+    background-image: url('/images/progress/progress-fill.png'); /* TODO: положить заливку шкалы */
+    background-size: cover;
+    border-radius: 44px;
+    transition: width 0.6s ease-out;
+}
+
+.progress-percent {
+    top: 470px;
+    left: 76px;
+    font-family: var(--font-pixel);
+    font-size: 28px;
+    color: #fff;
+    z-index: 2;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.task-button {
+    width: 575.5px;
+    height: 318px;
+    border-radius: 24px;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 20px;
+    font-family: var(--font-pixel);
+    font-size: 22px;
+    color: #fff;
+    text-align: center;
+}
+
+.task-button.completed {
+    filter: grayscale(0.7) brightness(0.7);
+}
+
+.task-button.completed::after {
+    content: '✓';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #fff;
+}
+
+#btn-rk3      { top: 712px;    left: 91px;  background-image: url('/images/buttons/btn-rk3.png'); }
+#btn-rk4      { top: 712px;    left: 773px; background-image: url('/images/buttons/btn-rk4.png'); }
+#btn-rk5      { top: 1186.99px; left: 91px;  background-image: url('/images/buttons/btn-rk5.png'); }
+#btn-rk6      { top: 1186.99px; left: 773px; background-image: url('/images/buttons/btn-rk6.png'); }
+#btn-rk9      { top: 1661.99px; left: 91px;  background-image: url('/images/buttons/btn-rk9.png'); }
+#btn-rk1rk2   { top: 1661.99px; left: 773px; background-image: url('/images/buttons/btn-rk1rk2.png'); }
+#btn-ssfrk    { top: 2137px;   left: 432px; background-image: url('/images/buttons/btn-ssfrk.png'); }

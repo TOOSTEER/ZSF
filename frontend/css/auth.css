@@ -1,0 +1,122 @@
+/* auth.css — страница регистрации/входа (index.html) */
+
+.auth-page {
+    min-height: 2000px; /* реальная высота считается по контенту, см. config.js */
+    background-color: #1a1a2e; /* фоллбэк, пока нет реального фона */
+    background-image: url('/images/backgrounds/auth-bg.jpg'); /* TODO: положить реальный фон в images/backgrounds/ */
+    background-size: cover;
+    background-position: top center;
+}
+
+.auth-logo {
+    width: 706px;
+    height: 142px;
+    top: 464px;
+    left: 363px;
+    background-image: url('/images/icons/logo.png'); /* TODO: положить логотип в images/icons/ */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.auth-tabs {
+    top: 660px;
+    left: 237px;
+    width: 965px;
+    display: flex;
+    gap: 16px;
+}
+
+.auth-tab {
+    flex: 1;
+    height: 80px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.08);
+    font-family: var(--font-pixel);
+    font-size: 22px;
+    color: var(--color-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+}
+
+.auth-tab.active {
+    background: var(--color-accent);
+    color: #fff;
+}
+
+.auth-form {
+    top: 780px;
+    left: 237px;
+    width: 965px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.auth-field {
+    width: 965px;
+    height: 113px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 22px; /* TODO: подобрать точный размер шрифта поля */
+    padding: 0 36px; /* TODO: подобрать точные отступы поля */
+    color: #fff;
+}
+
+.auth-field::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.auth-field:focus {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.auth-switch-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 15px;
+    color: var(--color-muted);
+    text-decoration: underline;
+}
+
+.auth-submit {
+    position: absolute;
+    left: 276px;
+    top: 1816px;
+    width: 888px;
+    height: 113px;
+    border-radius: 30px;
+    background-color: var(--color-accent);
+    background-image: url('/images/buttons/btn-register.png'); /* TODO: положить картинку кнопки в images/buttons/ */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    font-family: var(--font-pixel);
+    font-size: 24px;
+}
+
+.auth-submit:active {
+    filter: brightness(0.85);
+    transform: scale(0.98);
+}
+
+.auth-hint {
+    position: absolute;
+    top: 1960px;
+    left: 237px;
+    width: 965px;
+}
+
+/* Модалка после регистрации участника */
+.auth-modal-team-color {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}

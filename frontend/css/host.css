@@ -1,0 +1,114 @@
+/* host.css — панель водящего (host.html).
+   Точных координат в ТЗ нет ("создай и подбери сам страницу"),
+   поэтому здесь используется обычный поток (flex), а не .abs-позиционирование,
+   но в рамках того же .stage шириной 1440px для единообразия с остальными страницами. */
+
+.host-page {
+    min-height: 1800px;
+    background-color: #101020;
+    padding: 80px 91px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.host-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.host-team-color {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+}
+
+.host-team-title {
+    font-family: var(--font-pixel);
+    font-size: 34px;
+}
+
+.host-progress-track {
+    width: 100%;
+    height: 88px;
+    border-radius: 44px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+    position: relative;
+}
+
+.host-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--color-accent);
+    border-radius: 44px;
+    transition: width 0.6s ease-out;
+}
+
+.host-progress-percent {
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    transform: translateY(-50%);
+    font-family: var(--font-pixel);
+    font-size: 26px;
+}
+
+.host-section-title {
+    font-family: var(--font-pixel);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.host-task-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.host-task-btn {
+    height: 96px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 18px;
+    padding: 0 20px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.host-task-btn.completed {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-muted);
+}
+
+.host-task-btn .checkmark {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-success);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.host-task-btn.completed .checkmark {
+    display: flex;
+}
+
+/* Модалка начисления баллов */
+.award-modal input[type="number"] {
+    width: 100%;
+    height: 64px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    text-align: center;
+    font-size: 22px;
+    margin: 16px 0;
+}

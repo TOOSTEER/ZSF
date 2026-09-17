@@ -1,0 +1,31 @@
+/* crossword-text.css — тип D: РК1/РК2 */
+
+.text-page {
+    min-height: 2700px;
+    background-color: #101018;
+    background-image: url('/images/backgrounds/text-bg.jpg'); /* TODO: реальный фон */
+    background-size: cover;
+}
+
+.text-info-heading {
+    position: absolute;
+    top: 158px;
+    left: 70px;
+    width: 1300px;
+    font-family: var(--font-pixel);
+    font-size: 30px;
+    text-align: center;
+}
+
+.text-info-body {
+    position: absolute;
+    top: 320px;
+    left: 91px;
+    width: 1258px;
+}
+
+.text-info-body p {
+    font-size: 16px;
+    color: var(--color-muted);
+    margin-bottom: 16px;
+}
