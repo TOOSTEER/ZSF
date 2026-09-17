@@ -1,5 +1,4 @@
 // crossword-wordsearch.js — тип C: wordsearch.html (РК9)
-// 7 слов, у каждого известны первая и последняя буква (см. ТЗ).
 
 document.addEventListener('DOMContentLoaded', async () => {
     initStageScaling();
@@ -13,7 +12,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    setTaskSlugFromUrl();
+
     const els = {
+        stage: document.querySelector('.stage'),
         title: document.getElementById('crossword-title'),
         wordList: document.getElementById('word-list'),
         answerFields: document.getElementById('answer-fields'),
@@ -34,17 +36,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const structure = await Api.crosswordStructure(taskId);
         questions = structure.questions || [];
-        els.title.textContent = structure.title;
+        els.title.textContent = structure.title || els.title.textContent;
+
+        const apiSlug = slugify(structure.title);
+        if (apiSlug && CONFIG.CROSSWORD_TYPES[apiSlug]) {
+            els.stage.dataset.task = apiSlug;
+        }
+
         renderWordList(questions);
         renderAnswerFields(questions);
     } catch (err) {
         console.error(err);
-        els.wordList.innerHTML = '<p class="error-text">Не удалось загрузить слова</p>';
+        renderWordList([]);
+        renderAnswerFields([]);
     }
 
     function renderWordList(qs) {
         if (!qs.length) {
-            // 7 плейсхолдеров, пока реальные слова не добавлены
             els.wordList.innerHTML = Array.from({ length: 7 })
                 .map((_, i) => `<div class="wordsearch-word-item">${i + 1}. _ _ _ _</div>`)
                 .join('');
@@ -58,20 +66,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     function renderAnswerFields(qs) {
         const list = qs.length ? qs : Array.from({ length: 7 }, (_, i) => ({ question_number: i + 1 }));
         els.answerFields.innerHTML = list
-            .map(
-                (q) => `
-            <div class="answer-field-row">
-                <div class="answer-field-number">${q.question_number}</div>
-                <input class="answer-field" data-number="${q.question_number}" type="text" placeholder="Слово" autocomplete="off" />
-            </div>`
-            )
+            .map((q) => `
+                <div class="answer-field-row">
+                    <div class="answer-field-number">${q.question_number}</div>
+                    <input class="answer-field" data-number="${q.question_number}" type="text" placeholder="Слово" autocomplete="off" />
+                </div>`)
             .join('');
     }
 
     function showScreen(n) {
         els.screen1.classList.toggle('active', n === 1);
         els.screen2.classList.toggle('active', n === 2);
+        setCrosswordScreen(n);
     }
+    showScreen(1);
+
     els.arrowNext.addEventListener('click', () => showScreen(2));
     els.arrowPrev.addEventListener('click', () => showScreen(1));
 

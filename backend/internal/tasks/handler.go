@@ -41,6 +41,10 @@ func (h *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetCrossword handles GET /api/tasks/:id/crossword.
+//
+// Задание считается «кроссвордным», если у него есть crossword_subtype
+// (classic / circles / wordsearch / text). Поле type при этом может быть
+// 'point' (точки РК3..ССФРК) или 'crossword' — оба варианта допустимы.
 func (h *Handler) GetCrossword(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
@@ -57,8 +61,11 @@ func (h *Handler) GetCrossword(w http.ResponseWriter, r *http.Request) {
 		writeJSONError(w, http.StatusInternalServerError, "internal error")
 		return
 	}
-	if task.Type != "crossword" {
-		writeJSONError(w, http.StatusBadRequest, "task is not a crossword")
+
+	// ИСПРАВЛЕНО: пропускаем и точки (type='point'), у которых задан
+	// crossword_subtype, и полноценные 'crossword'.
+	if task.CrosswordSubtype == nil || *task.CrosswordSubtype == "" {
+		writeJSONError(w, http.StatusBadRequest, "task has no crossword content")
 		return
 	}
 
@@ -67,16 +74,14 @@ func (h *Handler) GetCrossword(w http.ResponseWriter, r *http.Request) {
 		writeJSONError(w, http.StatusInternalServerError, "internal error")
 		return
 	}
-
-	subtype := ""
-	if task.CrosswordSubtype != nil {
-		subtype = *task.CrosswordSubtype
+	if questions == nil {
+		questions = []crossword.Question{}
 	}
 
 	resp := crossword.StructureResponse{
 		TaskID:    task.ID,
 		Title:     task.Title,
-		Subtype:   subtype,
+		Subtype:   *task.CrosswordSubtype,
 		Questions: questions,
 	}
 

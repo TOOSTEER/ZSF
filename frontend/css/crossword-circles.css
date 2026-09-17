@@ -2,54 +2,55 @@
 
 .circles-page {
     min-height: 2700px;
-    background-color: #101018;
-    background-image: url('/images/backgrounds/circles-bg.jpg'); /* TODO: реальный фон */
+    background-color: #cfe9f7;
     background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
 }
+.circles-page[data-task="rk4"][data-screen="1"]   { background-image: url('/images/backgrounds/rk4-1.png'); }
+.circles-page[data-task="rk4"][data-screen="2"]   { background-image: url('/images/backgrounds/rk4-2.png'); }
+.circles-page[data-task="ssfrk"][data-screen="1"] { background-image: url('/images/backgrounds/ssfrk-1.png'); }
+.circles-page[data-task="ssfrk"][data-screen="2"] { background-image: url('/images/backgrounds/ssfrk-2.png'); }
 
 .letter-circle {
     position: absolute;
-    width: 220px;
-    height: 220px;
+    width: 220px; height: 220px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    border: 2px dashed rgba(255, 255, 255, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: transparent;
+    border: none;
+    display: flex; align-items: center; justify-content: center;
     font-family: var(--font-pixel);
     font-size: 18px;
     color: var(--color-muted);
     text-align: center;
 }
-
 .circle-input {
     position: absolute;
-    width: 220px;
-    height: 56px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.1);
-    text-align: center;
+    width: 400px;
+    height: 60px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #2a2a2a;
+    text-align: left;
     font-family: var(--font-pixel);
-    font-size: 16px;
+    font-size: 22px;
+    color: var(--color-text);
+    padding: 0 8px;
 }
 
-/* Экран 1 — позиции кругов по ТЗ */
 #circle-1-1 { top: 253px;  left: 694px; }
 #circle-1-2 { top: 124px;  left: 919px; }
 #circle-1-3 { top: 1370px; left: 838px; }
 #circle-1-4 { top: 1783px; left: 92px;  }
-
 #input-1-1 { top: 483px;  left: 694px; }
 #input-1-2 { top: 354px;  left: 919px; }
 #input-1-3 { top: 1600px; left: 838px; }
 #input-1-4 { top: 2013px; left: 92px;  }
 
-/* Экран 2 — позиции кругов по ТЗ */
 #circle-2-1 { top: 59px;   left: 57px;  }
 #circle-2-2 { top: 1075px; left: 813px; }
 #circle-2-3 { top: 1316px; left: 52px;  }
-
 #input-2-1 { top: 289px;   left: 57px;  }
 #input-2-2 { top: 1305px;  left: 813px; }
 #input-2-3 { top: 1546px;  left: 52px;  }

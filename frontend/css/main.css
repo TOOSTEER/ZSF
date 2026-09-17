@@ -2,8 +2,8 @@
 
 .main-page {
     min-height: 2300px;
-    background-color: #14142b;
-    background-image: url('/images/backgrounds/main-bg.jpg'); /* TODO: положить реальный фон */
+    background-color: #cfe9f7;
+    background-image: url('/images/backgrounds/main-bg.png');
     background-size: cover;
     background-position: top center;
 }
@@ -15,23 +15,15 @@
     flex-direction: column;
     gap: 12px;
 }
-
 .main-team-name {
     font-family: var(--font-pixel);
     font-size: 32px;
+    color: var(--color-text);
 }
-
-.main-team-color-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
+.main-team-color-row { display: flex; align-items: center; gap: 12px; }
 .main-team-color-dot {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid rgba(255, 255, 255, 0.5);
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.7);
 }
 
 .progress-track {
@@ -40,22 +32,21 @@
     width: 1243px;
     height: 88px;
     border-radius: 44px;
-    background-color: rgba(255, 255, 255, 0.12);
-    background-image: url('/images/progress/progress-empty.png'); /* TODO: положить пустую шкалу */
+    background-color: rgba(255, 255, 255, 0.35);
+    background-image: url('/images/progress/progress-empty.png');
     background-size: cover;
     overflow: hidden;
+    border: 3px solid rgba(30, 64, 175, 0.4);
 }
-
 .progress-fill {
     height: 100%;
-    width: 0%; /* выставляется в JS: min(progress, 100)% */
+    width: 0%;
     background-color: var(--color-accent);
-    background-image: url('/images/progress/progress-fill.png'); /* TODO: положить заливку шкалы */
+    background-image: url('/images/progress/progress-fill.png');
     background-size: cover;
     border-radius: 44px;
     transition: width 0.6s ease-out;
 }
-
 .progress-percent {
     top: 470px;
     left: 76px;
@@ -64,13 +55,14 @@
     color: #fff;
     z-index: 2;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    padding-left: 30px;
 }
 
 .task-button {
     width: 575.5px;
     height: 318px;
     border-radius: 24px;
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: transparent;
     background-size: cover;
     background-position: center;
     display: flex;
@@ -79,34 +71,18 @@
     padding-bottom: 20px;
     font-family: var(--font-pixel);
     font-size: 22px;
-    color: #fff;
+    color: var(--color-accent);
     text-align: center;
+    cursor: pointer;
+    border: none;
 }
 
-.task-button.completed {
-    filter: grayscale(0.7) brightness(0.7);
-}
+.task-button.completed { filter: grayscale(0.7) brightness(0.7); }
 
-.task-button.completed::after {
-    content: '✓';
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--color-success);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    color: #fff;
-}
-
-#btn-rk3      { top: 712px;    left: 91px;  background-image: url('/images/buttons/btn-rk3.png'); }
-#btn-rk4      { top: 712px;    left: 773px; background-image: url('/images/buttons/btn-rk4.png'); }
-#btn-rk5      { top: 1186.99px; left: 91px;  background-image: url('/images/buttons/btn-rk5.png'); }
-#btn-rk6      { top: 1186.99px; left: 773px; background-image: url('/images/buttons/btn-rk6.png'); }
-#btn-rk9      { top: 1661.99px; left: 91px;  background-image: url('/images/buttons/btn-rk9.png'); }
-#btn-rk1rk2   { top: 1661.99px; left: 773px; background-image: url('/images/buttons/btn-rk1rk2.png'); }
-#btn-ssfrk    { top: 2137px;   left: 432px; background-image: url('/images/buttons/btn-ssfrk.png'); }
+#btn-rk3    { top: 712px;     left: 91px;  background-image: url('/images/buttons/btn-rk3.png'); }
+#btn-rk4    { top: 712px;     left: 773px; background-image: url('/images/buttons/btn-rk4.png'); }
+#btn-rk5    { top: 1186.99px; left: 91px;  background-image: url('/images/buttons/btn-rk5.png'); }
+#btn-rk6    { top: 1186.99px; left: 773px; background-image: url('/images/buttons/btn-rk6.png'); }
+#btn-rk9    { top: 1661.99px; left: 91px;  background-image: url('/images/buttons/btn-rk9.png'); }
+#btn-rk1rk2 { top: 1661.99px; left: 773px; background-image: url('/images/buttons/btn-rk1rk2.png'); }
+#btn-ssfrk  { top: 2137px;    left: 432px; background-image: url('/images/buttons/btn-ssfrk.png'); }

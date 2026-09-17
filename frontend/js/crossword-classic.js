@@ -1,6 +1,4 @@
 // crossword-classic.js — тип A: classic.html (РК3, РК5, РК6)
-// Общий сценарий для всех 4 типов кроссвордов: 2 экрана, стрелки-переключатели,
-// "Назад" заблокирован до успешной проверки, POST /api/crossword/:id/check.
 
 document.addEventListener('DOMContentLoaded', async () => {
     initStageScaling();
@@ -14,7 +12,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    // Фон ставим сразу, не ждём API
+    setTaskSlugFromUrl();
+
     const els = {
+        stage: document.querySelector('.stage'),
         title: document.getElementById('crossword-title'),
         clueList: document.getElementById('clue-list'),
         answerFields: document.getElementById('answer-fields'),
@@ -35,59 +37,64 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const structure = await Api.crosswordStructure(taskId);
         questions = structure.questions || [];
-        els.title.textContent = structure.title;
+        els.title.textContent = structure.title || els.title.textContent;
+
+        // Если API вернул title, уточним слаг по нему (на случай иной нумерации)
+        const apiSlug = slugify(structure.title);
+        if (apiSlug && CONFIG.CROSSWORD_TYPES[apiSlug]) {
+            els.stage.dataset.task = apiSlug;
+        }
+
         renderClues(questions);
         renderAnswerFields(questions);
     } catch (err) {
         console.error(err);
-        els.clueList.innerHTML = '<p class="error-text">Не удалось загрузить вопросы</p>';
+        // Fallback: показываем поля, чтобы страница не была пустой
+        renderClues([]);
+        renderAnswerFields([]);
     }
 
     function renderClues(qs) {
         if (!qs.length) {
-            els.clueList.innerHTML = '<p class="hint-text">Вопросы ещё не добавлены — появятся позже.</p>';
+            els.clueList.innerHTML = '<p class="hint-text">Вопросы ещё не добавлены.</p>';
             return;
         }
         const across = qs.filter((q) => q.direction !== 'down');
         const down = qs.filter((q) => q.direction === 'down');
-
         let html = '';
         if (across.length) {
-            html += '<div class="clue-group-title">По горизонтали</div>';
+            html += '<div class="clue-group-title">По горизонтали:</div>';
             across.forEach((q) => (html += `<div class="clue-item">${q.question_number}. ${q.question_text}</div>`));
         }
         if (down.length) {
-            html += '<div class="clue-group-title">По вертикали</div>';
+            html += '<div class="clue-group-title">По вертикали:</div>';
             down.forEach((q) => (html += `<div class="clue-item">${q.question_number}. ${q.question_text}</div>`));
         }
         els.clueList.innerHTML = html;
     }
 
     function renderAnswerFields(qs) {
-        if (!qs.length) {
-            els.answerFields.innerHTML = '<p class="hint-text">Поля появятся вместе с вопросами.</p>';
-            return;
-        }
-        els.answerFields.innerHTML = qs
-            .map(
-                (q) => `
-            <div class="answer-field-row">
-                <div class="answer-field-number">${q.question_number}</div>
-                <input class="answer-field" data-number="${q.question_number}" type="text" placeholder="Ответ" autocomplete="off" />
-            </div>`
-            )
+        // Fallback: 7 полей с нумерацией, если вопросов нет
+        const list = qs.length ? qs : Array.from({ length: 7 }, (_, i) => ({ question_number: i + 1 }));
+        els.answerFields.innerHTML = list
+            .map((q) => `
+                <div class="answer-field-row">
+                    <div class="answer-field-number">${q.question_number}</div>
+                    <input class="answer-field" data-number="${q.question_number}" type="text" placeholder="Ответ" autocomplete="off" />
+                </div>`)
             .join('');
     }
 
-    // ---- Переключение экранов ----
     function showScreen(n) {
         els.screen1.classList.toggle('active', n === 1);
         els.screen2.classList.toggle('active', n === 2);
+        setCrosswordScreen(n);
     }
+    showScreen(1);
+
     els.arrowNext.addEventListener('click', () => showScreen(2));
     els.arrowPrev.addEventListener('click', () => showScreen(1));
 
-    // ---- Проверка ответов ----
     els.checkBtn.addEventListener('click', async () => {
         const inputs = els.answerFields.querySelectorAll('.answer-field');
         inputs.forEach((i) => i.classList.remove('field-error'));
@@ -130,7 +137,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     els.resultClose.addEventListener('click', () => els.resultModal.classList.add('hidden'));
 
-    // ---- Кнопка "Назад" (на главную), заблокирована до успеха ----
     els.backBtn.addEventListener('click', () => {
         if (!solved) return;
         window.location.href = '../main.html';

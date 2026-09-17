@@ -11,26 +11,22 @@
 <body>
     <div class="stage-wrapper">
         <div class="stage auth-page">
-
             <div class="abs auth-logo" aria-label="Логотип квеста"></div>
 
-            <!-- Переключатель Регистрация / Вход (Вход — только для водящих) -->
-            <div class="abs" style="top: 616px; left: 237px; width: 965px; text-align: center;">
+            <div class="abs" style="top: 616px; left: 237px; width: 965px; text-align: center; font-family: var(--font-pixel);">
                 <a href="#" class="js-form-mode" data-mode="register" style="margin-right: 24px; text-decoration: underline;">Регистрация</a>
                 <a href="#" class="js-form-mode" data-mode="login" style="text-decoration: underline; opacity: 0.6;">Вход (водящий)</a>
             </div>
 
-            <!-- ФОРМА РЕГИСТРАЦИИ -->
             <form id="register-form" class="abs auth-form">
-
                 <div class="abs auth-tabs" style="position: static;">
                     <button type="button" class="auth-tab js-role-tab active" data-role="member">Участник</button>
                     <button type="button" class="auth-tab js-role-tab" data-role="host">Водящий</button>
                 </div>
 
-                <input class="auth-field" style="position: static;" type="text" name="first_name" placeholder="Имя" required />
-                <input class="auth-field" style="position: static;" type="text" name="last_name" placeholder="Фамилия" required />
-                <input class="auth-field" style="position: static;" type="text" name="group_name" placeholder="Группа" required />
+                <input class="auth-field" style="position: static;" type="text" name="first_name" placeholder="Введите имя" required />
+                <input class="auth-field" style="position: static;" type="text" name="last_name" placeholder="Введите фамилию" required />
+                <input class="auth-field" style="position: static;" type="text" name="group_name" placeholder="Введите ник в ТГ" required />
 
                 <div id="field-password" class="visually-hidden">
                     <input class="auth-field" style="position: static;" type="password" name="password" placeholder="Пароль водящего" />
@@ -39,7 +35,6 @@
 
             <button form="register-form" type="submit" class="abs auth-submit">Зарегистрироваться</button>
 
-            <!-- ФОРМА ВХОДА (водящий) -->
             <form id="login-form" class="abs auth-form visually-hidden">
                 <input class="auth-field" style="position: static;" type="text" name="login" placeholder="Логин" required />
                 <input class="auth-field" style="position: static;" type="password" name="password" placeholder="Пароль" required />
@@ -50,7 +45,6 @@
         </div>
     </div>
 
-    <!-- Модалка после успешной регистрации участника -->
     <div id="success-modal" class="modal-overlay hidden">
         <div class="modal">
             <h2>Добро пожаловать!</h2>

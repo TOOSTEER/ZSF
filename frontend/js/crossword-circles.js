@@ -12,7 +12,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    setTaskSlugFromUrl();
+
     const els = {
+        stage: document.querySelector('.stage'),
         title: document.getElementById('crossword-title'),
         screen1: document.getElementById('screen-1'),
         screen2: document.getElementById('screen-2'),
@@ -25,16 +28,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         resultClose: document.getElementById('result-close'),
     };
 
-    // 7 кругов всего: 4 на экране 1, 3 на экране 2 (нумерация вопросов 1..7)
     const circleNumbers = [1, 2, 3, 4, 5, 6, 7];
     let solved = false;
 
     try {
         const structure = await Api.crosswordStructure(taskId);
-        els.title.textContent = structure.title;
+        els.title.textContent = structure.title || els.title.textContent;
+
+        const apiSlug = slugify(structure.title);
+        if (apiSlug && CONFIG.CROSSWORD_TYPES[apiSlug]) {
+            els.stage.dataset.task = apiSlug;
+        }
+
         fillCircleLabels(structure.questions || []);
     } catch (err) {
         console.error(err);
+        fillCircleLabels([]);
     }
 
     function fillCircleLabels(questions) {
@@ -42,22 +51,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             const circleEl = document.getElementById(circleIdFor(num));
             const q = questions.find((x) => x.question_number === num);
             if (circleEl) {
-                circleEl.textContent = q ? `№${num}` : `№${num} (уточняется)`;
+                circleEl.textContent = q ? q.question_text : '';
             }
         });
     }
 
-    function circleIdFor(num) {
-        return num <= 4 ? `circle-1-${num}` : `circle-2-${num - 4}`;
-    }
-    function inputIdFor(num) {
-        return num <= 4 ? `input-1-${num}` : `input-2-${num - 4}`;
-    }
+    function circleIdFor(num) { return num <= 4 ? `circle-1-${num}` : `circle-2-${num - 4}`; }
+    function inputIdFor(num)  { return num <= 4 ? `input-1-${num}`  : `input-2-${num - 4}`; }
 
     function showScreen(n) {
         els.screen1.classList.toggle('active', n === 1);
         els.screen2.classList.toggle('active', n === 2);
+        setCrosswordScreen(n);
     }
+    showScreen(1);
+
     els.arrowNext.addEventListener('click', () => showScreen(2));
     els.arrowPrev.addEventListener('click', () => showScreen(1));
 

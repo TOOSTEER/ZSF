@@ -17,15 +17,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         progressFill: document.getElementById('progress-fill'),
         progressPercent: document.getElementById('progress-percent'),
         buttons: {
-            'РК3': document.getElementById('btn-rk3'),
-            'РК4': document.getElementById('btn-rk4'),
-            'РК5': document.getElementById('btn-rk5'),
-            'РК6': document.getElementById('btn-rk6'),
-            'РК9': document.getElementById('btn-rk9'),
-            'РК1/РК2': document.getElementById('btn-rk1rk2'),
-            'ССФРК': document.getElementById('btn-ssfrk'),
+            'rk3':    document.getElementById('btn-rk3'),
+            'rk4':    document.getElementById('btn-rk4'),
+            'rk5':    document.getElementById('btn-rk5'),
+            'rk6':    document.getElementById('btn-rk6'),
+            'rk9':    document.getElementById('btn-rk9'),
+            'rk1rk2': document.getElementById('btn-rk1rk2'),
+            'ssfrk':  document.getElementById('btn-ssfrk'),
         },
     };
+
+    // Навешиваем обработчики кликов сразу — до запроса к API,
+    // чтобы кнопки работали даже при пустом прогрессе.
+    Object.entries(els.buttons).forEach(([slug, btn]) => {
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+            const taskId = btn.dataset.taskId || CONFIG.TASK_SLUGS_BY_ID[Object.keys(CONFIG.TASK_SLUGS_BY_ID).find(k => CONFIG.TASK_SLUGS_BY_ID[k] === slug)];
+            const subtype = CONFIG.CROSSWORD_TYPES[slug];
+            if (!subtype) {
+                console.warn('Не найден шаблон кроссворда для', slug);
+                return;
+            }
+            const query = taskId
+                ? `?id=${taskId}&slug=${slug}`
+                : `?slug=${slug}`;
+            window.location.href = `crosswords/${subtype}.html${query}`;
+        });
+    });
 
     try {
         const me = await Api.me();
@@ -35,7 +53,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const team = me.team;
         if (!team) throw new Error('Команда не найдена');
 
-        els.teamName.textContent = team.name;
+        els.teamName.textContent = `${me.user.first_name} ${me.user.last_name}\nКоманда: ${team.name}`;
+        els.teamName.style.whiteSpace = 'pre-line';
         els.teamColorDot.style.background = team.color;
 
         const progress = await Api.teamProgress(team.id);
@@ -52,7 +71,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     function renderProgressBar(progress) {
         const displayPercent = Math.min(progress.display_percent, CONFIG.MAX_PERCENT);
         els.progressFill.style.width = `${displayPercent}%`;
-
         const suffix = progress.total_percent > CONFIG.MAX_PERCENT
             ? `${progress.total_percent}% / ${CONFIG.MAX_PERCENT}%`
             : `${progress.total_percent}%`;
@@ -60,22 +78,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function renderTaskButtons(items, buttons) {
-        Object.entries(buttons).forEach(([title, btn]) => {
+        Object.entries(buttons).forEach(([slug, btn]) => {
             if (!btn) return;
-            const item = items.find((i) => i.title === title);
-            if (!item) {
-                btn.textContent = title;
-                btn.classList.add('disabled');
-                return;
-            }
+            const item = items.find((i) => slugify(i.title) === slug);
+            if (!item) return;
 
-            btn.textContent = title;
+            btn.dataset.taskId = item.task_id;
             btn.classList.toggle('completed', item.is_completed);
-
-            const subtype = CONFIG.CROSSWORD_TYPES[title] || item.crossword_subtype;
-            btn.addEventListener('click', () => {
-                window.location.href = `crosswords/${subtype}.html?id=${item.task_id}`;
-            });
         });
     }
 });
