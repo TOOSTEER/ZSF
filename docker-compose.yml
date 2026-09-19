@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: zsf-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: quest_user
+      POSTGRES_PASSWORD: 123456789
+      POSTGRES_DB: questdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  backend:
+    build: /opt/ZSF/backend
+    container_name: zsf-backend
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      PORT: 8080
+      DATABASE_URL: postgres://quest_user:123456789@postgres:5432/questdb?sslmode=disable
+      JWT_SECRET: 07173fe30de36c5ece46b756da1adc937651fa6992d4b0fc242c4788954fd3f0
+      JWT_EXPIRY_HOURS: 24
+      CORS_ORIGIN: http://155.212.129.123
+    ports:
+      - "127.0.0.1:8080:8080"
+
+volumes:
+  pgdata:
