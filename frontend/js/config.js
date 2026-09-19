@@ -1,7 +1,17 @@
 // config.js — глобальный конфиг фронтенда квеста.
 
 const CONFIG = {
-    API_URL: 'http://localhost:8080/api',
+    // Автоопределение адреса API:
+    // — локально (localhost) → http://localhost:8080/api
+    // — на сервере (155.212.129.123 или домен) → http://<host>/api
+    API_URL: (function () {
+        const host = location.hostname;
+        if (host === 'localhost' || host === '127.0.0.1') {
+            return 'http://localhost:8080/api';
+        }
+        return location.protocol + '//' + host + '/api';
+    })(),
+
     TEAM_COLORS: {
         1: '#2563EB',   // Синяя команда
         2: '#DC2626',   // Красная команда

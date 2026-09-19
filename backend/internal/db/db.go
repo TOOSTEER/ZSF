@@ -19,6 +19,13 @@ func NewPool(dsn string) (*pgxpool.Pool, error) {
 	cfg.MinConns = 1
 	cfg.HealthCheckPeriod = 30 * time.Second
 
+	// Форсируем UTF-8 на уровне соединения — иначе на Windows/некоторых
+	// локалях русские буквы могут биться.
+	if cfg.ConnConfig.RuntimeParams == nil {
+		cfg.ConnConfig.RuntimeParams = map[string]string{}
+	}
+	cfg.ConnConfig.RuntimeParams["client_encoding"] = "UTF8"
+
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
