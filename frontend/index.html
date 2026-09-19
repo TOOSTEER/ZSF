@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Квест — Вход</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+    <div class="stage-wrapper">
+        <div class="stage auth-page">
+            <div class="abs auth-logo" aria-label="Логотип квеста"></div>
+
+            <form id="auth-form" class="auth-form">
+                <div class="auth-tabs">
+                    <button type="button" class="auth-tab js-role-tab active" data-role="member">Участник</button>
+                    <button type="button" class="auth-tab js-role-tab" data-role="host">Водящий</button>
+                </div>
+
+                <!-- ========== ПОЛЯ УЧАСТНИКА ========== -->
+                <input id="member-first-name"
+                       class="auth-field member-field"
+                       type="text" name="member_first_name"
+                       autocomplete="off" />
+
+                <input id="member-last-name"
+                       class="auth-field member-field"
+                       type="text" name="member_last_name"
+                       autocomplete="off" />
+
+                <input id="member-group"
+                       class="auth-field member-field"
+                       type="text" name="member_group"
+                       autocomplete="off" />
+
+                <!-- ========== ПОЛЯ ВОДЯЩЕГО ========== -->
+                <!-- Строка 1: логин (там же, где «Введите имя») -->
+                <input id="host-login"
+                       class="auth-field host-field hidden-field"
+                       type="text" name="host_login"
+                       autocomplete="off" />
+
+                <!-- Метка над полем пароля -->
+                <label id="host-password-label"
+                       class="auth-label host-field hidden-field"
+                       for="host-password">Введите пароль водящего</label>
+
+                <!-- Строка 2: пароль (Top 1182, Left 237, W 965, H 113, R 30) -->
+                <input id="host-password"
+                       class="auth-field host-field hidden-field"
+                       type="password" name="host_password"
+                       autocomplete="off" />
+            </form>
+
+            <button id="auth-submit" form="auth-form" type="submit"
+                    class="abs auth-submit" aria-label="Продолжить"></button>
+
+            <p id="auth-error" class="abs error-text hidden-field"></p>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <h2>Добро пожаловать!</h2>
+            <p>Ваш логин: <strong id="modal-login"></strong></p>
+            <p>Ваша команда: <strong id="modal-team"></strong>
+                <span id="modal-team-color" class="auth-modal-team-color"></span>
+            </p>
+            <button id="modal-continue" class="btn-primary">Продолжить</button>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

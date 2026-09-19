@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Квест — Панель водящего</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/host.css" />
+</head>
+<body>
+    <div class="stage-wrapper">
+        <div class="stage host-page" style="position: static; transform: none;">
+            <!-- host.html не использует .abs-координаты (в ТЗ явно указано "создай сам"),
+                 поэтому здесь обычный поток; initStageScaling всё равно масштабирует общий блок -->
+
+            <div class="host-header">
+                <div id="host-team-color" class="host-team-color"></div>
+                <div id="host-team-title" class="host-team-title">Команда</div>
+            </div>
+
+            <div class="host-progress-track">
+                <div id="host-progress-fill" class="host-progress-fill"></div>
+                <div id="host-progress-percent" class="host-progress-percent">0%</div>
+            </div>
+
+            <section>
+                <div class="host-section-title">Точки</div>
+                <div id="grid-points" class="host-task-grid"></div>
+            </section>
+
+            <section>
+                <div class="host-section-title">Доп. задания</div>
+                <div id="grid-extra" class="host-task-grid"></div>
+            </section>
+
+            <section>
+                <div class="host-section-title">Кроссворды (автоматически)</div>
+                <div id="grid-crossword" class="host-task-grid"></div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Модалка начисления баллов -->
+    <div id="award-modal" class="modal-overlay hidden">
+        <div class="modal award-modal">
+            <h2 id="award-task-title">Задание</h2>
+            <p>Количество баллов</p>
+            <input id="award-points-input" type="number" min="1" />
+            <p id="award-error" class="error-text"></p>
+            <div style="display: flex; gap: 12px; margin-top: 8px;">
+                <button id="award-cancel" class="btn" style="flex: 1; height: 48px; border-radius: 24px; background: rgba(255,255,255,0.1);">Отмена</button>
+                <button id="award-confirm" class="btn-primary" style="flex: 1; height: 48px; border-radius: 24px;">Начислить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/host.js"></script>
+</body>
+</html>

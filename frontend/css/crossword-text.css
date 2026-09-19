@@ -1,0 +1,14 @@
+/* crossword-text.css — тип D: РК1/РК2 */
+
+.text-page {
+    background-color: #cfe9f7;
+    background-size: 100% 100%;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.text-page[data-task="rk1rk2"][data-screen="1"] { background-image: url('/images/backgrounds/rk1rk2-1.png'); }
+.text-page[data-task="rk1rk2"][data-screen="2"] { background-image: url('/images/backgrounds/rk1rk2-2.png'); }
+
+.text-page[data-task="rk1rk2"] .nav-arrow.next { background-image: url('/images/arrows/arrow-rk1rk2-right.png'); }
+.text-page[data-task="rk1rk2"] .nav-arrow.prev { background-image: url('/images/arrows/arrow-rk1rk2-left.png'); }

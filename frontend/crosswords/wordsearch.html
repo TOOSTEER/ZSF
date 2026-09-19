@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Квест — Найди слова</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/crossword-wordsearch.css" />
+</head>
+<body>
+    <div class="stage-wrapper">
+        <div class="stage wordsearch-page" data-screen="1">
+
+            <div id="screen-1" class="crossword-screen active">
+                <div id="answer-fields-1"></div>
+            </div>
+
+            <div id="screen-2" class="crossword-screen">
+                <div id="answer-fields-2"></div>
+                <button id="check-btn" class="check-btn">Проверить</button>
+            </div>
+
+            <div class="crossword-nav">
+                <button id="arrow-prev" class="nav-arrow prev" aria-label="Назад"></button>
+                <button id="arrow-next" class="nav-arrow next" aria-label="Вперёд"></button>
+                <a id="back-btn" class="nav-back-btn" href="../main.html">← На главную</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="result-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <p id="result-text" style="font-size: 18px; font-weight: 600;"></p>
+            <button id="result-close" class="btn-primary">Ок</button>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/crossword-wordsearch.js"></script>
+</body>
+</html>

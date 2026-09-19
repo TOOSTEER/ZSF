@@ -1,0 +1,14 @@
+/* crossword-wordsearch.css — тип C: РК9 */
+
+.wordsearch-page {
+    background-color: #cfe9f7;
+    background-size: 100% 100%;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.wordsearch-page[data-task="rk9"][data-screen="1"] { background-image: url('/images/backgrounds/rk9-1.png'); }
+.wordsearch-page[data-task="rk9"][data-screen="2"] { background-image: url('/images/backgrounds/rk9-2.png'); }
+
+.wordsearch-page[data-task="rk9"] .nav-arrow.next { background-image: url('/images/arrows/arrow-rk9-right.png'); }
+.wordsearch-page[data-task="rk9"] .nav-arrow.prev { background-image: url('/images/arrows/arrow-rk9-left.png'); }

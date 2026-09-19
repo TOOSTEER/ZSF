@@ -1,0 +1,150 @@
+/* auth.css — страница регистрации/авторизации (index.html) */
+
+.auth-page {
+    background-color: #cfe9f7;
+    background-image: url('/images/backgrounds/auth-bg.png');
+    background-size: 100% 100%;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+/* Фон для режима «Водящий» */
+.auth-page.host-mode {
+    background-image: url('/images/backgrounds/auth-host-bg.png');
+}
+
+.auth-logo {
+    position: absolute;
+    top: 464px;
+    left: 363px;
+    width: 706px;
+    height: 142px;
+    background-image: url('/images/icons/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.auth-form { position: static; display: block; }
+
+.auth-tabs {
+    position: absolute;
+    top: 660px;
+    left: 237px;
+    width: 965px;
+    display: flex;
+    gap: 16px;
+}
+.auth-tab {
+    flex: 1;
+    height: 80px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-pixel);
+    font-size: 22px;
+    color: var(--color-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    cursor: pointer;
+    border: none;
+}
+.auth-tab.active { background: var(--color-accent); color: #fff; }
+
+/* ============================================================
+   Поля ввода — общий стиль.
+   Каждое поле позиционируется абсолютно.
+   ============================================================ */
+
+.auth-field {
+    position: absolute;
+    width: 965px;
+    height: 113px;
+    border-radius: 30px;
+    border: 5px solid transparent;
+    background-color: rgba(255, 255, 255, 0.25);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: var(--font-pixel);
+    font-size: 22px;
+    padding: 0 36px;
+    color: var(--color-text);
+    box-sizing: border-box;
+    outline: none;
+}
+.auth-field::placeholder { color: transparent; }
+.auth-field:focus { background-color: rgba(255, 255, 255, 0.55); }
+
+/* ---------- УЧАСТНИК ---------- */
+#member-first-name { top: 894px;  left: 237px; width: 965px; height: 113px; border-radius: 30px; }
+#member-last-name  { top: 1182px; left: 237px; width: 965px; height: 113px; border-radius: 30px; }
+#member-group      { top: 1470px; left: 237px; width: 965px; height: 113px; border-radius: 30px; }
+
+/* ---------- ВОДЯЩИЙ ---------- */
+/* Логин — на позиции «Имя» */
+#host-login {
+    top: 894px;
+    left: 237px;
+    width: 965px;
+    height: 113px;
+    border-radius: 30px;
+}
+
+/* Пароль — на позиции «Фамилия»
+   Width 965 / Height 113 / Top 1182 / Left 237 / Radius 30 */
+#host-password {
+    top: 1182px;
+    left: 237px;
+    width: 965px;
+    height: 113px;
+    border-radius: 30px;
+}
+
+/* Метка «Введите пароль водящего» — над полем пароля */
+.auth-label {
+    position: absolute;
+    top: 1098px;              /* 1182 − 84 = 1098 — отступ ~84px */
+    left: 237px;
+    width: 965px;
+    font-family: var(--font-pixel);
+    font-size: 30px;
+    line-height: 1.4;
+    color: #31414D;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ---------- Кнопка «Продолжить» ---------- */
+.auth-submit {
+    position: absolute;
+    top: 1816px;
+    left: 276px;
+    width: 888px;
+    height: 113px;
+    border-radius: 30px;
+    border: 5px solid transparent;
+    background-color: var(--color-accent);
+    background-image: url('/images/buttons/btn-register.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #fff;
+    font-family: var(--font-pixel);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+}
+.auth-submit:active { filter: brightness(0.85); transform: scale(0.98); }
+
+#auth-error { top: 1990px; left: 237px; width: 965px; }
+
+/* Скрытие полей. display:none перебивает .auth-field по каскаду. */
+.hidden-field { display: none !important; }
+
+.auth-modal-team-color {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: inline-block; vertical-align: middle;
+    margin-left: 8px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+}

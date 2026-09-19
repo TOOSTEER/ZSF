@@ -1,0 +1,22 @@
+/* crossword-circles.css — тип B: РК4, ССФРК */
+
+.circles-page {
+    background-color: #cfe9f7;
+    background-size: 100% 100%;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.circles-page[data-task="rk4"][data-screen="1"]   { background-image: url('/images/backgrounds/rk4-1.png'); }
+.circles-page[data-task="rk4"][data-screen="2"]   { background-image: url('/images/backgrounds/rk4-2.png'); }
+.circles-page[data-task="ssfrk"][data-screen="1"] { background-image: url('/images/backgrounds/ssfrk-1.png'); }
+.circles-page[data-task="ssfrk"][data-screen="2"] { background-image: url('/images/backgrounds/ssfrk-2.png'); }
+
+/* Стрелки: у каждой точки своя пара. */
+.circles-page[data-task="rk4"] .nav-arrow.next   { background-image: url('/images/arrows/arrow-rk4-right.png'); }
+.circles-page[data-task="rk4"] .nav-arrow.prev   { background-image: url('/images/arrows/arrow-rk4-left.png'); }
+.circles-page[data-task="ssfrk"] .nav-arrow.next { background-image: url('/images/arrows/arrow-ssfrk-right.png'); }
+.circles-page[data-task="ssfrk"] .nav-arrow.prev { background-image: url('/images/arrows/arrow-ssfrk-left.png'); }
+
+/* Кнопка Проверить — координаты при необходимости подгоните.
+   Пока используются дефолтные из common.css. */
