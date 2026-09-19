@@ -10,6 +10,7 @@
 
 :root {
     --design-width: 1440;
+    --design-height: 2560;
     --column-max-width: 480px;
     --font-main: 'Public Pixel', -apple-system, 'Roboto', monospace;
     --font-pixel: 'Public Pixel', 'Press Start 2P', monospace;
@@ -33,9 +34,7 @@ html, body {
 body {
     font-family: var(--font-main);
     font-size: 16px;
-    display: flex;
-    justify-content: center;
-    min-height: 100%;
+    min-height: 100vh;
 }
 
 .stage-wrapper {
@@ -46,14 +45,17 @@ body {
     overflow: hidden;
 }
 
+/* Каждая страница — 1440×2560 (макет Figma) */
 .stage {
     position: relative;
     width: calc(var(--design-width) * 1px);
+    height: calc(var(--design-height) * 1px);
     transform-origin: top left;
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top center;
+    background-size: 100% 100%;
+    background-position: top left;
     transition: background-image 0.2s ease;
+    overflow: hidden;
 }
 
 .abs { position: absolute; }
@@ -72,14 +74,8 @@ body {
     background-size: cover;
     text-align: center;
 }
-
 .btn:active { transform: scale(0.96); filter: brightness(0.9); }
-
-.btn:disabled, .btn.disabled {
-    opacity: 0.4;
-    pointer-events: none;
-    filter: grayscale(1);
-}
+.btn:disabled, .btn.disabled { opacity: 0.4; pointer-events: none; filter: grayscale(1); }
 
 .btn-primary {
     background: var(--color-accent);
@@ -122,56 +118,44 @@ body {
     font-size: 13px; color: var(--color-danger);
     text-align: center; padding: 8px 12px;
 }
-.field-error {
-    border-color: var(--color-danger) !important;
-    box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.4);
-}
 
 /* Экраны кроссвордов */
 .crossword-screen {
     position: absolute;
     inset: 0;
     display: none;
-    padding: 60px 91px 260px;
+    padding: 0;
 }
 .crossword-screen.active { display: block; }
-
-.crossword-title {
-    font-family: var(--font-pixel);
-    font-size: 26px;
-    margin-bottom: 32px;
-    text-align: center;
-    color: var(--color-text);
-}
 
 /* Навигация */
 .crossword-nav {
     position: absolute;
     inset: 0;
     pointer-events: none;
+    z-index: 10;
 }
 
 .nav-arrow {
     position: absolute;
-    bottom: 60px;
     width: 171px;
     height: 119px;
-    border-radius: 20px;
     background-color: transparent;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     pointer-events: auto;
     display: none;
+    border: none;
+    cursor: pointer;
 }
 
-/* Экран 1 → видна только правая стрелка */
-.stage[data-screen="1"] .nav-arrow.next { display: block; left: auto; right: 56px; }
-/* Экран 2 → видна только левая стрелка */
-.stage[data-screen="2"] .nav-arrow.prev { display: block; left: 56px; }
-
+/* Базовые (fallback) стрелки */
 .nav-arrow.next { background-image: url('/images/arrows/arrow-right.png'); }
 .nav-arrow.prev { background-image: url('/images/arrows/arrow-left.png'); }
+
+.stage[data-screen="1"] .nav-arrow.next { display: block; right: 56px; bottom: 60px; }
+.stage[data-screen="2"] .nav-arrow.prev { display: block; left: 56px; bottom: 60px; }
 
 .nav-back-btn {
     position: absolute;
@@ -187,10 +171,14 @@ body {
     font-size: 16px;
     pointer-events: auto;
     display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
 }
-.stage[data-screen="2"] .nav-back-btn { display: block; }
+.stage[data-screen="2"] .nav-back-btn { display: flex; }
 
-/* Кнопка Проверить */
 .check-btn {
     position: absolute;
     bottom: 200px;
@@ -206,44 +194,36 @@ body {
     font-size: 22px;
     pointer-events: auto;
     display: none;
+    cursor: pointer;
 }
 .stage[data-screen="2"] .check-btn { display: block; }
 
-.clue-list { margin-top: 24px; }
-.clue-group-title {
+/* Поля ввода по палочкам — генерируются JS, координаты из CONFIG.ANSWER_LAYOUT.
+   Палочка имеет Height:0 + Border в Figma; здесь input высотой 60px,
+   нижняя граница совпадает с координатой Top палочки. */
+.answer-line {
+    position: absolute;
+    height: 60px;
+    background: transparent;
+    border: none;
+    outline: none;
     font-family: var(--font-pixel);
-    font-size: 18px;
-    margin: 20px 0 10px;
+    font-size: 26px;
+    color: var(--color-text);
+    padding: 0 12px;
+    line-height: 60px;
+    text-align: left;
 }
-.clue-item {
-    font-size: 15px;
-    margin-bottom: 8px;
-    color: var(--color-muted);
+.answer-line::placeholder {
+    color: rgba(30, 64, 175, 0.3);
+}
+.answer-line.field-error {
+    color: var(--color-danger);
 }
 
-.answer-field-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-.answer-field-number {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(30, 64, 175, 0.1);
-    color: var(--color-accent);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; flex-shrink: 0;
-}
-.answer-field {
-    flex: 1;
-    height: 56px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 2px solid rgba(30, 64, 175, 0.3);
-    padding: 0 16px;
-    font-family: var(--font-pixel);
-    font-size: 16px;
-    color: var(--color-text);
+/* Подсветка неверных полей — тонкая красная линия под полем */
+.answer-line.field-error {
+    border-bottom: 3px solid var(--color-danger);
 }
 
 .visually-hidden {

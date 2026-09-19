@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>Квест — Регистрация</title>
+    <title>Квест — Вход</title>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/common.css" />
     <link rel="stylesheet" href="css/auth.css" />
@@ -13,35 +13,51 @@
         <div class="stage auth-page">
             <div class="abs auth-logo" aria-label="Логотип квеста"></div>
 
-            <div class="abs" style="top: 616px; left: 237px; width: 965px; text-align: center; font-family: var(--font-pixel);">
-                <a href="#" class="js-form-mode" data-mode="register" style="margin-right: 24px; text-decoration: underline;">Регистрация</a>
-                <a href="#" class="js-form-mode" data-mode="login" style="text-decoration: underline; opacity: 0.6;">Вход (водящий)</a>
-            </div>
-
-            <form id="register-form" class="abs auth-form">
-                <div class="abs auth-tabs" style="position: static;">
+            <form id="auth-form" class="auth-form">
+                <div class="auth-tabs">
                     <button type="button" class="auth-tab js-role-tab active" data-role="member">Участник</button>
                     <button type="button" class="auth-tab js-role-tab" data-role="host">Водящий</button>
                 </div>
 
-                <input class="auth-field" style="position: static;" type="text" name="first_name" placeholder="Введите имя" required />
-                <input class="auth-field" style="position: static;" type="text" name="last_name" placeholder="Введите фамилию" required />
-                <input class="auth-field" style="position: static;" type="text" name="group_name" placeholder="Введите ник в ТГ" required />
+                <!-- ========== ПОЛЯ УЧАСТНИКА ========== -->
+                <input id="member-first-name"
+                       class="auth-field member-field"
+                       type="text" name="member_first_name"
+                       autocomplete="off" />
 
-                <div id="field-password" class="visually-hidden">
-                    <input class="auth-field" style="position: static;" type="password" name="password" placeholder="Пароль водящего" />
-                </div>
+                <input id="member-last-name"
+                       class="auth-field member-field"
+                       type="text" name="member_last_name"
+                       autocomplete="off" />
+
+                <input id="member-group"
+                       class="auth-field member-field"
+                       type="text" name="member_group"
+                       autocomplete="off" />
+
+                <!-- ========== ПОЛЯ ВОДЯЩЕГО ========== -->
+                <!-- Строка 1: логин (там же, где «Введите имя») -->
+                <input id="host-login"
+                       class="auth-field host-field hidden-field"
+                       type="text" name="host_login"
+                       autocomplete="off" />
+
+                <!-- Метка над полем пароля -->
+                <label id="host-password-label"
+                       class="auth-label host-field hidden-field"
+                       for="host-password">Введите пароль водящего</label>
+
+                <!-- Строка 2: пароль (Top 1182, Left 237, W 965, H 113, R 30) -->
+                <input id="host-password"
+                       class="auth-field host-field hidden-field"
+                       type="password" name="host_password"
+                       autocomplete="off" />
             </form>
 
-            <button form="register-form" type="submit" class="abs auth-submit">Зарегистрироваться</button>
+            <button id="auth-submit" form="auth-form" type="submit"
+                    class="abs auth-submit" aria-label="Продолжить"></button>
 
-            <form id="login-form" class="abs auth-form visually-hidden">
-                <input class="auth-field" style="position: static;" type="text" name="login" placeholder="Логин" required />
-                <input class="auth-field" style="position: static;" type="password" name="password" placeholder="Пароль" required />
-                <button type="submit" class="btn btn-primary" style="position: static; width: 965px; height: 113px; border-radius: 30px;">Войти</button>
-            </form>
-
-            <p id="auth-error" class="abs error-text visually-hidden" style="top: 1960px; left: 237px; width: 965px;"></p>
+            <p id="auth-error" class="abs error-text hidden-field"></p>
         </div>
     </div>
 
@@ -52,7 +68,7 @@
             <p>Ваша команда: <strong id="modal-team"></strong>
                 <span id="modal-team-color" class="auth-modal-team-color"></span>
             </p>
-            <button id="modal-continue" class="btn-primary" style="width: 100%; height: 48px; border-radius: 24px; margin-top: 16px;">Продолжить</button>
+            <button id="modal-continue" class="btn-primary">Продолжить</button>
         </div>
     </div>
 

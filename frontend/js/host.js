@@ -46,9 +46,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function reloadProgress() {
         const progress = await Api.teamProgress(team.id);
+        const pct = Math.min(progress.display_percent, CONFIG.MAX_PERCENT);
+        // Внутри host.css заливка сама ограничена max-width: calc(100% - 22px),
+        // поэтому здесь достаточно процента.
+        els.progressFill.style.width = `${pct}%`;
 
-        const displayPercent = Math.min(progress.display_percent, CONFIG.MAX_PERCENT);
-        els.progressFill.style.width = `${displayPercent}%`;
         els.progressPercent.textContent = progress.total_percent > CONFIG.MAX_PERCENT
             ? `${progress.total_percent}% / ${CONFIG.MAX_PERCENT}%`
             : `${progress.total_percent}%`;
@@ -65,23 +67,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.className = 'host-task-btn' + (item.is_completed ? ' completed' : '');
             btn.innerHTML = `<span>${item.title}</span><span class="checkmark">✓</span>`;
 
-            // Кроссворды начисляются автоматически бэкендом — водящий их не трогает.
             if (item.type === 'crossword') {
                 btn.disabled = true;
-                btn.title = 'Начисляется автоматически при решении кроссворда';
+                btn.title = 'Начисляется автоматически';
             } else {
                 btn.addEventListener('click', () => openAwardModal(item));
             }
-
             container.appendChild(btn);
         });
     }
 
     function openAwardModal(item) {
-        if (item.is_completed) return; // уже начислено — повторное начисление запрещено
+        if (item.is_completed) return;
         activeItem = item;
         els.modalTaskTitle.textContent = item.title;
-        els.modalPointsInput.value = item.points_percent; // фикс. значение по умолчанию: 12 или 3
+        els.modalPointsInput.value = item.points_percent;
         els.modalError.textContent = '';
         els.modalOverlay.classList.remove('hidden');
     }
@@ -100,7 +100,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             els.modalError.textContent = 'Введите корректное количество баллов';
             return;
         }
-
         try {
             await Api.awardProgress({ team_id: team.id, task_id: activeItem.task_id, points });
             closeAwardModal();

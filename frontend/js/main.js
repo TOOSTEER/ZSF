@@ -27,20 +27,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         },
     };
 
-    // Навешиваем обработчики кликов сразу — до запроса к API,
-    // чтобы кнопки работали даже при пустом прогрессе.
     Object.entries(els.buttons).forEach(([slug, btn]) => {
         if (!btn) return;
         btn.addEventListener('click', () => {
-            const taskId = btn.dataset.taskId || CONFIG.TASK_SLUGS_BY_ID[Object.keys(CONFIG.TASK_SLUGS_BY_ID).find(k => CONFIG.TASK_SLUGS_BY_ID[k] === slug)];
             const subtype = CONFIG.CROSSWORD_TYPES[slug];
-            if (!subtype) {
-                console.warn('Не найден шаблон кроссворда для', slug);
-                return;
-            }
-            const query = taskId
-                ? `?id=${taskId}&slug=${slug}`
-                : `?slug=${slug}`;
+            if (!subtype) { console.warn('Нет шаблона для', slug); return; }
+            const taskId = btn.dataset.taskId
+                || Object.keys(CONFIG.TASK_SLUGS_BY_ID).find(k => CONFIG.TASK_SLUGS_BY_ID[k] === slug);
+            const query = taskId ? `?id=${taskId}&slug=${slug}` : `?slug=${slug}`;
             window.location.href = `crosswords/${subtype}.html${query}`;
         });
     });
@@ -68,9 +62,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Заливка шкалы: px-ширина = (percent / 100) * PROGRESS_MAX_FILL_PX
     function renderProgressBar(progress) {
-        const displayPercent = Math.min(progress.display_percent, CONFIG.MAX_PERCENT);
-        els.progressFill.style.width = `${displayPercent}%`;
+        const pct = Math.min(progress.display_percent, CONFIG.MAX_PERCENT);
+        const fillWidth = (pct / 100) * CONFIG.PROGRESS_MAX_FILL_PX;
+        els.progressFill.style.width = `${fillWidth}px`;
+
         const suffix = progress.total_percent > CONFIG.MAX_PERCENT
             ? `${progress.total_percent}% / ${CONFIG.MAX_PERCENT}%`
             : `${progress.total_percent}%`;
@@ -82,7 +79,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!btn) return;
             const item = items.find((i) => slugify(i.title) === slug);
             if (!item) return;
-
             btn.dataset.taskId = item.task_id;
             btn.classList.toggle('completed', item.is_completed);
         });

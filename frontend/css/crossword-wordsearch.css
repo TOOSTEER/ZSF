@@ -1,51 +1,14 @@
 /* crossword-wordsearch.css — тип C: РК9 */
 
 .wordsearch-page {
-    min-height: 2700px;
     background-color: #cfe9f7;
-    background-size: cover;
-    background-position: top center;
+    background-size: 100% 100%;
+    background-position: top left;
     background-repeat: no-repeat;
 }
 
 .wordsearch-page[data-task="rk9"][data-screen="1"] { background-image: url('/images/backgrounds/rk9-1.png'); }
 .wordsearch-page[data-task="rk9"][data-screen="2"] { background-image: url('/images/backgrounds/rk9-2.png'); }
 
-.wordsearch-heading {
-    position: absolute;
-    top: 120px; left: 0;
-    width: 100%;
-    text-align: center;
-    font-family: var(--font-pixel);
-    font-size: 28px;
-    color: var(--color-text);
-}
-.wordsearch-list {
-    position: absolute;
-    top: 732px; left: 130px;
-    width: 1180px;
-}
-.wordsearch-word-item {
-    font-family: var(--font-pixel);
-    font-size: 22px;
-    letter-spacing: 4px;
-    margin-bottom: 16px;
-    color: var(--color-text);
-}
-.wordsearch-rect {
-    position: absolute;
-    top: 1223px; left: 260px;
-    width: 1092px; height: 1092px;
-    border-radius: 16px;
-    background-color: rgba(255, 255, 255, 0.0);
-    background-image: none;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-muted);
-    font-size: 14px;
-    text-align: center;
-    padding: 24px;
-}
+.wordsearch-page[data-task="rk9"] .nav-arrow.next { background-image: url('/images/arrows/arrow-rk9-right.png'); }
+.wordsearch-page[data-task="rk9"] .nav-arrow.prev { background-image: url('/images/arrows/arrow-rk9-left.png'); }

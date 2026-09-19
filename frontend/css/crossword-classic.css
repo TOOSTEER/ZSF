@@ -1,10 +1,9 @@
 /* crossword-classic.css — тип A: РК3, РК5, РК6 */
 
 .classic-page {
-    min-height: 2700px;
     background-color: #cfe9f7;
-    background-size: cover;
-    background-position: top center;
+    background-size: 100% 100%;
+    background-position: top left;
     background-repeat: no-repeat;
 }
 
@@ -15,27 +14,21 @@
 .classic-page[data-task="rk6"][data-screen="1"] { background-image: url('/images/backgrounds/rk6-1.png'); }
 .classic-page[data-task="rk6"][data-screen="2"] { background-image: url('/images/backgrounds/rk6-2.png'); }
 
-/* Если фонов для конкретной задачи нет — просто цвет */
-.classic-page {
-    background-color: #cfe9f7;
-}
+/* Стрелки: у каждой точки своя пара. Если файла нет — используется fallback из common.css. */
+.classic-page[data-task="rk3"] .nav-arrow.next { background-image: url('/images/arrows/arrow-rk3-right.png'); }
+.classic-page[data-task="rk3"] .nav-arrow.prev { background-image: url('/images/arrows/arrow-rk3-left.png'); }
+.classic-page[data-task="rk5"] .nav-arrow.next { background-image: url('/images/arrows/arrow-rk5-right.png'); }
+.classic-page[data-task="rk5"] .nav-arrow.prev { background-image: url('/images/arrows/arrow-rk5-left.png'); }
+.classic-page[data-task="rk6"] .nav-arrow.next { background-image: url('/images/arrows/arrow-rk6-right.png'); }
+.classic-page[data-task="rk6"] .nav-arrow.prev { background-image: url('/images/arrows/arrow-rk6-left.png'); }
 
-/* Сетка кроссворда — если готовая картинка появится, добавьте её в background-image */
-.classic-grid-box {
-    width: 1258px;
-    height: 900px;
-    margin: 0 auto;
-    border-radius: 24px;
-    background-color: rgba(255, 255, 255, 0.0);
-    background-image: none;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-muted);
-    font-size: 14px;
-    text-align: center;
-    padding: 24px;
+/* Кнопка Проверить — координаты из Figma для РК3, размножаем на все classic.
+   При необходимости уточнить для РК5/РК6 отдельно. */
+.classic-page .check-btn {
+    top: 2058px;
+    bottom: auto;
+    left: 407px;
+    transform: none;
+    width: 625px;
+    height: 120px;
 }

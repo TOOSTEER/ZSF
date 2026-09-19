@@ -7,7 +7,6 @@
 }
 
 html, body {
-    height: 100%;
     width: 100%;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
@@ -44,7 +43,6 @@ ul, ol {
     list-style: none;
 }
 
-/* Убираем стрелки у number-инпутов (используются в модалке начисления баллов) */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;

@@ -11,22 +11,20 @@
 <body>
     <div class="stage-wrapper">
         <div class="stage wordsearch-page" data-screen="1">
-            <div id="screen-1" class="crossword-screen active" style="padding: 0;">
-                <h1 id="crossword-title" class="wordsearch-heading">Найди слова</h1>
-                <div id="word-list" class="wordsearch-list"></div>
-                <div class="wordsearch-rect"></div>
+
+            <div id="screen-1" class="crossword-screen active">
+                <div id="answer-fields-1"></div>
             </div>
 
             <div id="screen-2" class="crossword-screen">
-                <h1 class="crossword-title">Введите найденные слова</h1>
-                <div id="answer-fields"></div>
+                <div id="answer-fields-2"></div>
                 <button id="check-btn" class="check-btn">Проверить</button>
             </div>
 
             <div class="crossword-nav">
                 <button id="arrow-prev" class="nav-arrow prev" aria-label="Назад"></button>
                 <button id="arrow-next" class="nav-arrow next" aria-label="Вперёд"></button>
-                <button id="back-btn" class="nav-back-btn disabled" disabled>← На главную</button>
+                <a id="back-btn" class="nav-back-btn" href="../main.html">← На главную</a>
             </div>
         </div>
     </div>

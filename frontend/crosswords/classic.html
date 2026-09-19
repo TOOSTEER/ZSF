@@ -11,22 +11,22 @@
 <body>
     <div class="stage-wrapper">
         <div class="stage classic-page" data-screen="1">
+
+            <!-- Экран 1 — тело кроссворда (только фон) -->
             <div id="screen-1" class="crossword-screen active">
-                <h1 id="crossword-title" class="crossword-title">Кроссворд</h1>
-                <div class="classic-grid-box"></div>
-                <div id="clue-list" class="clue-list"></div>
+                <div id="answer-fields-1"></div>
             </div>
 
+            <!-- Экран 2 — ввод ответов -->
             <div id="screen-2" class="crossword-screen">
-                <h1 class="crossword-title">Ваши ответы</h1>
-                <div id="answer-fields"></div>
+                <div id="answer-fields-2"></div>
                 <button id="check-btn" class="check-btn">Проверить</button>
             </div>
 
             <div class="crossword-nav">
                 <button id="arrow-prev" class="nav-arrow prev" aria-label="Назад"></button>
                 <button id="arrow-next" class="nav-arrow next" aria-label="Вперёд"></button>
-                <button id="back-btn" class="nav-back-btn disabled" disabled>← На главную</button>
+                <a id="back-btn" class="nav-back-btn" href="../main.html">← На главную</a>
             </div>
         </div>
     </div>

@@ -1,33 +1,17 @@
 // api.js — обёртка над fetch для похода в бэкенд.
-// Хранит JWT в localStorage и подставляет его в заголовок Authorization.
 
 const TOKEN_KEY = 'quest_token';
-const USER_KEY = 'quest_user';
-const TEAM_KEY = 'quest_team';
+const USER_KEY  = 'quest_user';
+const TEAM_KEY  = 'quest_team';
 
 const Storage = {
     getToken: () => localStorage.getItem(TOKEN_KEY),
     setToken: (token) => localStorage.setItem(TOKEN_KEY, token),
     clearToken: () => localStorage.removeItem(TOKEN_KEY),
-
-    getUser: () => {
-        try {
-            return JSON.parse(localStorage.getItem(USER_KEY) || 'null');
-        } catch (e) {
-            return null;
-        }
-    },
+    getUser: () => { try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); } catch (e) { return null; } },
     setUser: (user) => localStorage.setItem(USER_KEY, JSON.stringify(user)),
-
-    getTeam: () => {
-        try {
-            return JSON.parse(localStorage.getItem(TEAM_KEY) || 'null');
-        } catch (e) {
-            return null;
-        }
-    },
+    getTeam: () => { try { return JSON.parse(localStorage.getItem(TEAM_KEY) || 'null'); } catch (e) { return null; } },
     setTeam: (team) => localStorage.setItem(TEAM_KEY, JSON.stringify(team)),
-
     clearAll: () => {
         localStorage.removeItem(TOKEN_KEY);
         localStorage.removeItem(USER_KEY);
@@ -35,14 +19,8 @@ const Storage = {
     },
 };
 
-/**
- * Базовый враппер над fetch.
- * @param {string} path - путь относительно CONFIG.API_URL, например '/me'
- * @param {object} options - { method, body, auth }
- */
 async function apiRequest(path, options = {}) {
     const { method = 'GET', body, auth = true } = options;
-
     const headers = { 'Content-Type': 'application/json' };
     if (auth) {
         const token = Storage.getToken();
@@ -52,8 +30,7 @@ async function apiRequest(path, options = {}) {
     let response;
     try {
         response = await fetch(`${CONFIG.API_URL}${path}`, {
-            method,
-            headers,
+            method, headers,
             body: body ? JSON.stringify(body) : undefined,
         });
     } catch (networkErr) {
@@ -63,18 +40,12 @@ async function apiRequest(path, options = {}) {
     let data = null;
     const text = await response.text();
     if (text) {
-        try {
-            data = JSON.parse(text);
-        } catch (e) {
-            data = null;
-        }
+        try { data = JSON.parse(text); } catch (e) { data = null; }
     }
-
     if (!response.ok) {
         const message = (data && data.error) || `Ошибка ${response.status}`;
         throw new ApiError(response.status, message, data);
     }
-
     return data;
 }
 
@@ -88,7 +59,7 @@ class ApiError extends Error {
 
 const Api = {
     register: (payload) => apiRequest('/auth/register', { method: 'POST', body: payload, auth: false }),
-    login: (payload) => apiRequest('/auth/login', { method: 'POST', body: payload, auth: false }),
+    login:    (payload) => apiRequest('/auth/login',    { method: 'POST', body: payload, auth: false }),
     me: () => apiRequest('/me'),
     teamProgress: (teamId) => apiRequest(`/teams/${teamId}/progress`),
     task: (taskId) => apiRequest(`/tasks/${taskId}`),
@@ -98,21 +69,12 @@ const Api = {
         apiRequest(`/crossword/${taskId}/check`, { method: 'POST', body: { answers } }),
 };
 
-/** Редиректит на index.html, если нет токена. Вызывается в начале защищённых страниц. */
 function requireAuth() {
-    if (!Storage.getToken()) {
-        window.location.href = 'index.html';
-        return false;
-    }
+    if (!Storage.getToken()) { window.location.href = 'index.html'; return false; }
     return true;
 }
-
-/** Редиректит на main.html, если роль не совпадает с ожидаемой ('host' | 'member'). */
 function requireRole(role) {
     const user = Storage.getUser();
-    if (!user || user.role !== role) {
-        window.location.href = 'main.html';
-        return false;
-    }
+    if (!user || user.role !== role) { window.location.href = 'main.html'; return false; }
     return true;
 }
